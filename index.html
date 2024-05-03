@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="s2.css">
+    <title>PriceHive</title>
+    <style>
+        .about_us_content {
+            padding: 50px 20px;
+            background-color: white;
+            text-align: center;
+        }
+        .button {
+            background-color: white;
+            color: #232c5b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease; 
+        }
+        .button:hover {
+            background-color: gray;
+            color: white;
+        }
+        .home {
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+        .nav-buttons {
+            display: flex;
+            align-items: center; 
+        }
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <h2>PriceHive.com</h2>
+            </div>
+            <div class="navItem">
+                <div class="nav-buttons">
+                    <button class="button" onclick="redirectToPage()">Search for Products</button>
+                    <button class="button" onclick="redirectToAmazonTrackPage()">Track Amazon</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="categories">
+        <div class="category">
+            <h2 class="categoryTitle">ELECTRONICS</h2>
+            <img decoding="async" src="electronics.jpg" alt="" class="categoryImg">
+        </div>
+        <div class="category">
+            <h2 class="categoryTitle">ACCESSORIES</h2>
+            <img decoding="async" src="accesories.jpg" alt="" class="categoryImg">
+        </div>
+        <div class="category">
+            <h2 class="categoryTitle">CLOTHING</h2>
+            <img decoding="async" src="clothing.jpg" alt="" class="categoryImg">
+        </div>
+    </section>
+    <section id="about_us" class="about_us_content">
+        <h2>About Us</h2>
+        <p>PriceHive helps you find the best prices for the products you want by comparing them across different online stores. With us, you can quickly search for any item and see where it's available and at what price. We make it easy for you to make smart shopping choices and save money.</p>
+    </section>
+    <script>
+        function redirectToPage() {
+            window.location.href = 'pricecom.html';
+        }
+        function redirectToAmazonTrackPage() {
+            window.location.href = 'track_amazon.html';
+        }
+    </script>
+</body>
+</html>

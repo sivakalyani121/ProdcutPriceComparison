@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>PriceHive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10;
+            background-color: #f2f2f2;
+            background-image: url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #nav {
+            background-color: #232c5b;
+            color: #fff;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        .navTop {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navItem h2 {
+            margin: 0;
+        }
+
+        .searchTerm {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            width: 200px;
+        }
+
+        .searchButton {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .category {
+            text-align: center;
+        }
+
+        .categoryTitle {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .categoryImg {
+            width: 200px;
+            border-radius: 5px;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+            padding-top: 120px; 
+        }
+
+        .product {
+            position: relative;
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .product h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .product p {
+            margin: 10px 0;
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footerLeft {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .fMenuTitle {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .fList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .fListItem {
+            margin: 5px 0;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .price-tracking-container {
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .price-chart-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .price-chart-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .legend {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .legend-item span {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        .legend-item .amazon {
+            background-color: blue;
+        }
+
+        .legend-item .new {
+            background-color: green;
+        }
+
+        .legend-item .used {
+            background-color: red;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-image: url('background.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+
+        .background-image.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-image"></div>
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <h2>PriceHive.com</h2>
+            </div>
+            <div class="navItem">
+                <div class="wrap">
+                    <div class="search">
+                        <input type="text" id="searchInput" class="searchTerm" placeholder="What are you looking for?">
+                        <button type="button" id="searchButton" class="searchButton">
+                            <i class="fas fa-search"></i> 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="products" class="products">
+    </section>
+  <div id="priceTrackingModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="price-tracking-container">
+            <div class="price-chart-container"></div>
+            <div class="legend">
+                <div class="legend-item"><span class="amazon"></span> Amazon</div>
+                <div class="legend-item"><span class="new"></span> 3rd Party New</div>
+                <div class="legend-item"><span class="used"></span> 3rd Party Used</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('searchButton').addEventListener('click', async () => {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm !== '') {
+                const apiKey = '101e8b9b3emsh6586ca84e656483p121e8ejsn99177bd93d7f';
+                const url = `https://real-time-amazon-data.p.rapidapi.com/search?query=${searchTerm}&page=2&country=US&sort_by=REVIEWS&category_id=aps`;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': apiKey,
+                        'X-RapidAPI-Host': 'real-time-amazon-data.p.rapidapi.com'
+                    }
+                };
+    
+                try {
+                    const response = await fetch(url, options);
+                    const data = await response.json();
+                    displayProducts(data);
+                    toggleBackgroundImage(false); 
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                alert('Please enter a search term.');
+            }
+        });
+    
+        function displayProducts(data) {
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+    
+            if (data && data.data && Array.isArray(data.data.products)) {
+                const validProducts = data.data.products.filter(product => (
+                    product.product_title && product.product_price && product.product_photo && product.asin && product.product_star_rating !== undefined
+                ));
+    
+                validProducts.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.classList.add('product');
+    
+                    const name = product.product_title;
+                    const price = product.product_price;
+                    const imageSrc = product.product_photo;
+                    const imageAlt = name;
+                    const productLink = product.product_url;
+                    const rating = product.product_star_rating;
+                    const numRatings = product.product_num_ratings;
+                    const asin = product.asin;
+                    const reviews = numRatings ? `${rating} (${numRatings} reviews)` : `${rating}`;
+    
+                    productElement.innerHTML = `
+                        <h3>${name}</h3>
+                        <p>Price: ${price}</p>
+                        <p>Star Rating: ${rating}</p>
+                        <p>Reviews: ${reviews}</p>
+                        <img src="${imageSrc}" alt="${imageAlt}">
+                        <p><a href="${productLink}" target="_blank">View Product</a></p>
+                        <button class="trackPriceButton" data-asin="${asin}">Track Price</button>
+                    `;
+                    productsContainer.appendChild(productElement);
+                });
+            } else {
+                const noResultsMessage = document.createElement('div');
+                noResultsMessage.textContent = 'No products found.';
+                productsContainer.appendChild(noResultsMessage);
+            }
+        }
+    
+        async function handleTrackPriceClick(event) {
+            if (event.target.classList.contains('trackPriceButton')) {
+                const asin = event.target.dataset.asin;
+                const modal = document.getElementById('priceTrackingModal');
+                const modalContent = modal.querySelector('.modal-content');
+                const priceChartContainer = modalContent.querySelector('.price-chart-container');
+    
+                priceChartContainer.innerHTML = '';
+    
+                modal.style.display = 'block';
+                fetchPriceChart(asin, priceChartContainer);
+            }
+        }
+    
+        async function fetchPriceChart(asin, priceChartContainer) {
+            const url = `https://price-tracking-tools.p.rapidapi.com/camelizer/get-price-chart?asin=${asin}&country=us&lang=en&w=720&h=480&tp=3m`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key':  '101e8b9b3emsh6586ca84e656483p121e8ejsn99177bd93d7f',
+                    'X-RapidAPI-Host': 'price-tracking-tools.p.rapidapi.com'
+                }
+            };
+    
+            try {
+                const response = await fetch(url, options);
+                const imageBlob = await response.blob();
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+    
+                if (response.ok) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageObjectURL;
+                    priceChartContainer.appendChild(imgElement);
+                } else {
+                    console.error('Error fetching price chart:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    
+        const productsContainer = document.getElementById('products');
+        productsContainer.addEventListener('click', handleTrackPriceClick);
+    
+        const modal = document.getElementById('priceTrackingModal');
+        const closeBtn = modal.querySelector('.close');
+    
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    
+        function toggleBackgroundImage(show) {
+            const backgroundImage = document.querySelector('.background-image');
+            backgroundImage.classList.toggle('hidden', !show);
+        }
+
+        toggleBackgroundImage(true);
+    </script>
